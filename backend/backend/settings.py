@@ -1,5 +1,10 @@
+# Importaciones
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+# Importacion de las cariables en el .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,7 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z0)t428fj=m@5%#m4@*+va&&d27px$emat)t-w_4a%6e&4nvwp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # Si se encuentra en true, marca errores mas detallados, mantener en False si ya se esta en produccion
+# Si se encuentra en true, marca errores mas detallados, mantener en False si ya se esta en produccion
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -65,8 +71,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DATABASE_BD'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_SERVER'),
+        'PORT': os.getenv('DATABASE_PORT'),
+        'OPTIONS': {
+            'autocommit' : True
+        }
     }
 }
 
